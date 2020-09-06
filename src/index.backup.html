@@ -6,7 +6,7 @@
     <link rel="icon" href="https://cdn.cocreate.app/favicon.ico" type="image/ico" sizes="16x16">
   
   <!-- CoCreate UI -->
-  <link rel="stylesheet" href="https://server.cocreate.app/css/CoCreate.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/CoCreate.min.css" type="text/css" />
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" crossorigin="anonymous" />    
@@ -127,10 +127,7 @@
 
 
   <script src="https://server.cocreate.app/js/CoCreate.min.js"></script>
-  <!--<script src='https://npmcdn.com/isotope-layout@3/dist/isotope.pkgd.js'></script>-->
-  <!--<script src="../dist/CoCreate-isotope.min.js"></script>-->
-  <script src="./CoCreate-isotope.js"></script>
-  <script src="../../CoCreate-interact/src/CoCreate-interact.js"></script>
+  <script type="text/javascript" src="./dist/CoCreate-isotope.min.js"></script>
   <!--<script src="https://unpkg.com/interactjs/dist/interact.min.js"></script>-->
   <!--<script src='https://npmcdn.com/isotope-layout@3/dist/isotope.pkgd.js'></script>-->
   <!--<script src='https://npmcdn.com/isotope-fit-columns@1/fit-columns.js'></script>-->
@@ -141,7 +138,97 @@
          * For Isotope function
          **/
   
+        var gridContainer = document.querySelector('.isotope-grid');
+        var layoutMode = gridContainer.getAttribute('isotope-layoutMode');
+        var itemWidth = gridContainer.getAttribute('isotope-columnWidth');
+        var itemHeight = gridContainer.getAttribute('isotope-rowHeight');
+        var itemSelector = gridContainer.getAttribute('isotope-itemselector');
+        
+        itemSelector = (itemSelector) ? "." + itemSelector : ".grid-item";
+        layoutMode = (layoutMode) ? layoutMode : "masonry";
+        
+        itemWidth = decisionSize(itemWidth);
+        itemHeight = decisionSize(itemHeight);
+        
+        var options = {
+            itemSelector,
+            layoutMode
+        }
+        
+        
+        if (layoutMode == "masonry") {
+            options.masonry = {
+                columnWidth : itemWidth
+            }
+            options.percentPosition = true;
+        } else if (layoutMode == "fitColumns") {
+            
+        }
 
+        var iso = new Isotope( '.grid', options);
+        
+        function decisionSize(size) {
+            if (!size) {
+                return null;
+            }
+            var ret_size = parseInt(size)
+            if (isNaN(ret_size)) {
+                ret_size = "." + size;
+            }
+            return ret_size;
+        }
+        
+        
+        /**
+         * For resize and snapping function using interact.js
+         **/
+        var resizeContainer = document.querySelector('.resize-grid'); 
+        var resizeItem = resizeContainer.getAttribute('resize-itemselector');
+        var isResize = resizeContainer.getAttribute('resizable');
+        var resizeWidth = resizeContainer.getAttribute('resize-snapWidth');
+        var resizeHeight = resizeContainer.getAttribute('resize-snapHeight');
+        
+        resizeItem = (resizeItem) ? "." + resizeItem : ".resizable";
+        resizeWidth = (resizeWidth) ? resizeWidth : resizeHeight;
+        resizeHeight = (resizeHeight) ? resizeHeight : resizeWidth;
+        
+        var resizeSnapObj = null;
+        
+        if (resizeWidth && resizeHeight) {
+            resizeSnapObj = interact.modifiers.snapSize({
+               targets: [
+                   interact.createSnapGrid({width: resizeWidth, height: resizeHeight})
+                ] 
+            });
+        }
+        
+        if (isResize) {
+            
+            interact(resizeItem).resizable({
+                edges: { left: true, right: true, bottom: true, top: true },
+                modifiers: [resizeSnapObj]
+            }).on('resizemove', function (event) {
+                var target = event.target
+                var x = (parseFloat(target.getAttribute('data-x')) || 0)
+                var y = (parseFloat(target.getAttribute('data-y')) || 0)
+            
+                target.style.width = event.rect.width + 'px'
+                target.style.height = event.rect.height + 'px'
+    
+                x += event.deltaRect.left
+                y += event.deltaRect.top
+
+                target.setAttribute('data-x', x)
+                target.setAttribute('data-y', y)
+                
+                //. resort gird
+                if (iso) {
+                    iso.arrange({ sortBy: "original-order" });
+                } else {
+                    target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px,' + y + 'px)'
+                }
+              }) 
+        }
         
 
   </script>

@@ -161,3 +161,12 @@ const CoCreateIsotope = {
 
 CoCreateIsotope.init()
 CoCreateInit.register('CoCreateIsotope', CoCreateIsotope, CoCreateIsotope.initElement);
+
+// CoCreate.observer.add({ 
+// 	name: 'CoCreateIsotope', 
+// 	observe: ['subtree', 'childList'],
+// 	include: '.isotope-grid', 
+// 	callback: function(mutation) {
+// 		CoCreateIsotope.initElement(mutation.target)
+// 	}
+// })

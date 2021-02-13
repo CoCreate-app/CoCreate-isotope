@@ -64,4 +64,4 @@ jobs:
         with:
           aws-key-id: ${{ secrets.AWSACCESSKEYID }}
           aws-access-key: ${{ secrets.AWSSECERTACCESSKEY }}
-          source: './dist/CoCreate-boilerplate.min.js'
+          source: './dist/CoCreate-isotope.min.js'

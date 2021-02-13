@@ -12,7 +12,7 @@ module.exports = {
             document_id: "",
             key: "html",
             data:{
-                name: "boilerplate Doc",
+                name: "Isotope Doc",
             }
         },
     ],
@@ -25,7 +25,7 @@ module.exports = {
                 document_id: "",
                 name: "html",
                 domains: ["cocreate.app", "server.cocreate.app", "ws.cocreate.app"],
-                route: "/docs/boilerplate",
+                route: "/docs/isotope",
             }
         }
     ],

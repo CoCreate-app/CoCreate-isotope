@@ -162,7 +162,7 @@ const CoCreateIsotope = {
 CoCreateIsotope.init()
 CoCreateInit.register('CoCreateIsotope', CoCreateIsotope, CoCreateIsotope.initElement);
 
-// CoCreate.observer.add({ 
+// CoCreate.observer.init({ 
 // 	name: 'CoCreateIsotope', 
 // 	observe: ['subtree', 'childList'],
 // 	include: '.isotope-grid', 

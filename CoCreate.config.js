@@ -9,7 +9,7 @@ module.exports = {
     sources: [{
             path: "./docs/index.html",
             collection: "files",
-            document_id: "",
+            document_id: "6028433a71064611a678a1af",
             key: "html",
             data:{
                 name: "Isotope Doc",
@@ -19,10 +19,10 @@ module.exports = {
    
     crud: [{
             collection: "routes",
-            document_id: "",
+            document_id: "6028433a71064611a678a1ae",
             data:{
                 collection: "files",
-                document_id: "",
+                document_id: "6028433a71064611a678a1af",
                 name: "html",
                 domains: ["cocreate.app", "server.cocreate.app", "ws.cocreate.app"],
                 route: "/docs/isotope",
